@@ -53,6 +53,7 @@ async function init() {
   await callerContract.methods
     .setOracleInstanceAddress(oracleAddress)
     .send({ from: ownerAddress });
+  console.log("Client started...");
   setInterval(async () => {
     await callerContract.methods.updateEthPrice().send({ from: ownerAddress });
   }, SLEEP_INTERVAL);

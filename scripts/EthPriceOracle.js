@@ -131,6 +131,7 @@ async function init() {
     client.disconnect();
     process.exit();
   });
+  console.log("Oracle started...");
   setInterval(async () => {
     await processQueue(oracleContract, ownerAddress);
   }, SLEEP_INTERVAL);
