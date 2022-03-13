@@ -1,7 +1,6 @@
 const axios = require("axios");
 const BN = require("bn.js");
 const common = require("../utils/common.js");
-const SLEEP_INTERVAL = process.env.SLEEP_INTERVAL || 2000;
 const PRIVATE_KEY_FILE_NAME =
   process.env.PRIVATE_KEY_FILE || "./oracle/oracle_private_key";
 const CHUNK_SIZE = process.env.CHUNK_SIZE || 3;
@@ -115,24 +114,15 @@ async function setLatestEthPrice(
   }
 }
 
-async function init() {
+async function init(privateKeyFileName) {
   const { ownerAddress, web3js, client } = common.loadAccount(
-    PRIVATE_KEY_FILE_NAME
+    privateKeyFileName
   );
   const oracleContract = await getOracleContract(web3js);
   filterEvents(oracleContract, web3js);
   return { oracleContract, ownerAddress, client };
 }
 
-(async () => {
-  const { oracleContract, ownerAddress, client } = await init();
-  process.on("SIGINT", () => {
-    console.log("Calling client.disconnect()");
-    client.disconnect();
-    process.exit();
-  });
-  console.log("Oracle started...");
-  setInterval(async () => {
-    await processQueue(oracleContract, ownerAddress);
-  }, SLEEP_INTERVAL);
-})();
+module.exports = {
+  processQueue, init,
+}

@@ -33,6 +33,14 @@ function loadAccount(privateKeyFileName) {
   };
 }
 
+function getAddress(privateKeyFileName) {
+  const privateKeyStr = fs.readFileSync(privateKeyFileName, "utf-8");
+  const privateKey = CryptoUtils.B64ToUint8Array(privateKeyStr);
+  const publicKey = CryptoUtils.publicKeyFromPrivateKey(privateKey);
+  return LocalAddress.fromPublicKey(publicKey).toString();
+}
+
 module.exports = {
   loadAccount,
+  getAddress,
 };

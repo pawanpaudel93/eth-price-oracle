@@ -4,7 +4,8 @@
     "deploy:oracle": "cd oracle && npx truffle migrate --network extdev --reset -all && cd ..",
     "deploy:caller": "cd caller && npx truffle migrate --network extdev --reset -all && cd ..",
     "deploy:all": "npm run deploy:oracle && npm run deploy:caller",
-    "oracle": "node scripts/EthPriceOracle.js",
+    "oracle1": "node scripts/Oracle1.js",
+    "oracle2": "node scripts/Oracle2.js",
     "client": "node scripts/Client.js"
   },
   "dependencies": {
